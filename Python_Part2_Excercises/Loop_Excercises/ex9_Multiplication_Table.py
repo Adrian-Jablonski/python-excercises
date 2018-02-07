@@ -1,3 +1,4 @@
+# Multiplication table
 numb1 = 1
 numb2 = 1
 
