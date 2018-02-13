@@ -1,0 +1,10 @@
+Example text file
+
+Python Dictionaries
+
+Dictionaries are collections that are indexed by keys, 
+which can be any immutable type. It is best to think of a 
+dictionary as an unordered set of key: value pairs, with 
+the requirement that the keys are unique (within one dictionary). 
+Placing a comma-separated list of key:value pairs within braces adds 
+initial key:value pairs to the dictionary.
