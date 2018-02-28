@@ -11,8 +11,8 @@ class Fake(Character):
         self.defense = 5
         self.x = -50
         self.y = -50
-        self.speed_x = 1
-        self.speed_y = 1
+        self.speed_x = 0
+        self.speed_y = 0
         self.damage = 0
         self.width = 1
         self.height = 1
@@ -21,10 +21,10 @@ class Fake(Character):
         self.clicked = False
 
 class Goblin(Character):
-    def __init__(self, x, y):
+    def __init__(self, x, y, min_walk_x, max_walk_x, min_walk_y, max_walk_y):
         self.name = "Goblin"
-        self.health = 10
-        self.max_health = 10
+        self.health = 14
+        self.max_health = 14
         self.power = 5
         self.defense = 5
         self.special_desc = "None"
@@ -42,9 +42,15 @@ class Goblin(Character):
         self.clicked = False
         self.x_when_clicked = ""
         self.y_when_clicked = ""
+        self.respawn_timer = 0
+        self.respawn_time = 150
+        self.min_walk_x = min_walk_x
+        self.min_walk_y = min_walk_y
+        self.max_walk_x = max_walk_x
+        self.max_walk_y = max_walk_y
 
 class Medic(Character):
-    def __init__(self, x, y):
+    def __init__(self, x, y, min_walk_x, max_walk_x, min_walk_y, max_walk_y):
         self.name = "Medic"
         self.health = 20
         self.max_health = 20
@@ -64,9 +70,15 @@ class Medic(Character):
         self.health_bar_numb = 20
         self.x_when_clicked = ""
         self.y_when_clicked = ""
+        self.respawn_timer = 0
+        self.respawn_time = 200
+        self.min_walk_x = min_walk_x
+        self.min_walk_y = min_walk_y
+        self.max_walk_x = max_walk_x
+        self.max_walk_y = max_walk_y
 
 class Shadow(Character):
-    def __init__(self, x, y):
+    def __init__(self, x, y, min_walk_x, max_walk_x, min_walk_y, max_walk_y):
         self.name = "Shadow"    
         self.health = 1
         self.max_health = 1
@@ -86,9 +98,15 @@ class Shadow(Character):
         self.health_bar_numb = 20
         self.x_when_clicked = ""
         self.y_when_clicked = ""
+        self.respawn_timer = 0
+        self.respawn_time = 300
+        self.min_walk_x = min_walk_x
+        self.min_walk_y = min_walk_y
+        self.max_walk_x = max_walk_x
+        self.max_walk_y = max_walk_y
 
 class Wizard(Character):
-    def __init__(self, x, y):
+    def __init__(self, x, y, min_walk_x, max_walk_x, min_walk_y, max_walk_y):
         self.name = "Wizard"
         self.health = 22
         self.max_health = 22
@@ -108,9 +126,15 @@ class Wizard(Character):
         self.health_bar_numb = 20
         self.x_when_clicked = ""
         self.y_when_clicked = ""
+        self.respawn_timer = 0
+        self.respawn_time = 400
+        self.min_walk_x = min_walk_x
+        self.min_walk_y = min_walk_y
+        self.max_walk_x = max_walk_x
+        self.max_walk_y = max_walk_y
 
 class Ranger(Character):
-    def __init__(self, x, y):
+    def __init__(self, x, y, min_walk_x, max_walk_x, min_walk_y, max_walk_y):
         self.name = "Ranger"
         self.health = 28
         self.max_health = 28
@@ -130,9 +154,15 @@ class Ranger(Character):
         self.health_bar_numb = 20
         self.x_when_clicked = ""
         self.y_when_clicked = ""
+        self.respawn_timer = 0
+        self.respawn_time = 400
+        self.min_walk_x = min_walk_x
+        self.min_walk_y = min_walk_y
+        self.max_walk_x = max_walk_x
+        self.max_walk_y = max_walk_y
 
 class Zombie(Character):
-    def __init__(self, x, y):
+    def __init__(self, x, y, min_walk_x, max_walk_x, min_walk_y, max_walk_y):
         self.name = "Zombie"
         self.health = 30
         self.max_health = 30
@@ -152,9 +182,15 @@ class Zombie(Character):
         self.health_bar_numb = 20
         self.x_when_clicked = ""
         self.y_when_clicked = ""
+        self.respawn_timer = 0
+        self.respawn_time = 500
+        self.min_walk_x = min_walk_x
+        self.min_walk_y = min_walk_y
+        self.max_walk_x = max_walk_x
+        self.max_walk_y = max_walk_y
 
 class Dragon(Character):
-    def __init__(self, x, y):
+    def __init__(self, x, y, min_walk_x, max_walk_x, min_walk_y, max_walk_y):
         self.name = "Dragon"
         self.health = 45
         self.max_health = 45
@@ -174,5 +210,11 @@ class Dragon(Character):
         self.health_bar_numb = 20
         self.x_when_clicked = ""
         self.y_when_clicked = ""
+        self.respawn_timer = 0
+        self.respawn_time = 600
+        self.min_walk_x = min_walk_x
+        self.min_walk_y = min_walk_y
+        self.max_walk_x = max_walk_x
+        self.max_walk_y = max_walk_y
 
     

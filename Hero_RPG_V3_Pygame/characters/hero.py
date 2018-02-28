@@ -5,14 +5,14 @@ import math
 class Hero(Character):
     def __init__(self):
         self.name = "Hero"
-        self.health = 50
-        self.max_health = 50
+        self.health = 15
+        self.max_health = 15
         self.power = 10
         self.defense = 8
         self.special_desc = "Generates 2x damage / 20%"
         self.coins = 100
         self.items = {
-            "Tonic": 0, 
+            "Healing_Potion": 4, 
             "Helmet": 0, 
             "Sword": 0, 
             "Shield": 0, 
@@ -26,7 +26,7 @@ class Hero(Character):
             "Defense_Level": 0,
             "Health_Level" : 0,
         }
-        self.x = 512 / 2
+        self.x = 70
         self.y = 480 / 2
         self.speed_x = 1
         self.speed_y = 1
@@ -44,15 +44,16 @@ class Hero(Character):
         randNumb = random.randint(0, len(enemy.bounty) - 1)    
         print("\033[1;33;40mYou receive {} coins\U0001F4B0 \033[0;37;40m".format(enemy.bounty[randNumb]))
         self.coins += enemy.bounty[randNumb]    # Receive coins from enemy
+        return (enemy.bounty[randNumb])
 
-    def restore_health(self, hero):
-        if (hero.health + 10) > self.max_health:
+    def restore_health(self):
+        if (self.health + 10) > self.max_health:
             restore_amount = self.max_health - self.health
         else:
             restore_amount = 10
         self.health += restore_amount
-        self.items["Tonic"] -= 1
-        print("\033[0;32;40m{} drank a Tonic and restored \033[1;32;40m{}\033[0;32;40m health.\033[0;37;40m".format(self.name, restore_amount))
+        self.items["Healing_Potion"] -= 1
+        print("\033[0;32;40m{} drank a Healing Potion and restored \033[1;32;40m{}\033[0;32;40m health.\033[0;37;40m".format(self.name, restore_amount))
 
     def equip_items(self, hero, item):
         if item == "Helmet":

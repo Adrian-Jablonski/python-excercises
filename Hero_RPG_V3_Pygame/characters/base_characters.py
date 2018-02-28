@@ -5,7 +5,7 @@ import time
 red_color = (255, 0, 0)
 
 class Character(object):
-    def __init__(self, name, health, max_health, power, defense, special_desc, coins, x, items={}, bounty=[]):
+    def __init__(self, name, health, max_health, power, defense, special_desc, coins, x, y,  min_walk_x, max_walk_x, min_walk_y, max_walk_y, items={}, bounty=[]):
         self.name = name
         self.health = health
         self.max_health = max_health
@@ -15,6 +15,11 @@ class Character(object):
         self.coins = coins
         self.items = items
         self.x = x
+        self.y = y
+        self.min_walk_x = min_walk_x
+        self.min_walk_y = min_walk_y
+        self.max_walk_x = max_walk_x
+        self.max_walk_x = max_walk_x
 
     def attack(self, enemy, special_attack, screen):
         global damage 
@@ -96,57 +101,57 @@ class Character(object):
         align = 7 - len(self.name) - 1
         print(" " * align, "\033[1;34;40m{} - \033[1;32;40m\u2694\uFE0F P: {} \033[1;36;40m\U0001F6E1 D: {} \033[1;31;40m\u2764\uFE0F H: {}/{} \033[0;37;40m".format(self.name, self.power, self.defense, self.health, self.max_health))
 
-    def update(self, width, height, rand_numb):
+    def walking(self, width, height, rand_numb):
         rand_x = 0
         rand_y = 0
+        if self.fight_status == False:
+            if self.x > self.max_walk_x:    # Moves right
+                #self.x = width - self.width
+                self.speed_x *= -1
+                #rand_numb = 1
+            if self.y > self.max_walk_y:    # Moves Down
+                #self.y = height - self.height
+                self.speed_y *= -1
+                #rand_numb = 3
+            if self.x < self.min_walk_x:         # Moves Left
+                #self.x = self.width + 3
+                self.speed_x *= -1
+                #rand_numb = 0
+            if self.y < self.max_walk_x:         # Moves up
+                #self.y = self.height + 3
+                self.speed_y *= -1
+                #rand_numb = 2
+                
+            if rand_numb == 0:      # Move right
+                rand_x = self.speed_x
+                rand_y = 0
+            elif rand_numb == 1:    # Move left
+                rand_x -= self.speed_x
+                rand_y = 0
+            elif rand_numb == 2:    # Move down
+                rand_x = 0
+                rand_y = self.speed_y
+            elif rand_numb == 3:    # Move up
+                rand_x = 0
+                rand_y -= self.speed_y 
+            elif rand_numb == 4:    # South East
+                rand_x = self.speed_x / 2
+                rand_y = self.speed_y / 2
+            elif rand_numb == 5:    # North East
+                rand_x = self.speed_x / 2
+                rand_y -= self.speed_y / 2
+            elif rand_numb == 6:    # North West
+                rand_x -= self.speed_x / 2
+                rand_y -= self.speed_y / 2
+            elif rand_numb == 7:    # South West
+                rand_x -= self.speed_x / 2
+                rand_y = self.speed_y / 2
+            elif rand_numb ==8:
+                rand_x = 0
+                rand_y = 0
 
-        if self.x > width - 50:    # Moves right
-            #self.x = width - self.width
-            self.speed_x *= -1
-            #rand_numb = 1
-        if self.y > height - 50:    # Moves Down
-            #self.y = height - self.height
-            self.speed_y *= -1
-            #rand_numb = 3
-        if self.x < 50:         # Moves Left
-            #self.x = self.width + 3
-            self.speed_x *= -1
-            #rand_numb = 0
-        if self.y < 50:         # Moves up
-            #self.y = self.height + 3
-            self.speed_y *= -1
-            #rand_numb = 2
-            
-        if rand_numb == 0:      # Move right
-            rand_x = self.speed_x
-            rand_y = 0
-        elif rand_numb == 1:    # Move left
-            rand_x -= self.speed_x
-            rand_y = 0
-        elif rand_numb == 2:    # Move down
-            rand_x = 0
-            rand_y = self.speed_y
-        elif rand_numb == 3:    # Move up
-            rand_x = 0
-            rand_y -= self.speed_y 
-        elif rand_numb == 4:    # South East
-            rand_x = self.speed_x / 2
-            rand_y = self.speed_y / 2
-        elif rand_numb == 5:    # North East
-            rand_x = self.speed_x / 2
-            rand_y -= self.speed_y / 2
-        elif rand_numb == 6:    # North West
-            rand_x -= self.speed_x / 2
-            rand_y -= self.speed_y / 2
-        elif rand_numb == 7:    # South West
-            rand_x -= self.speed_x / 2
-            rand_y = self.speed_y / 2
-        elif rand_numb ==8:
-            rand_x = 0
-            rand_y = 0
-
-        self.x += rand_x
-        self.y += rand_y
+            self.x += rand_x
+            self.y += rand_y
 
     def health_bar(self):
         health_perc = float(self.health / self.max_health)
@@ -159,8 +164,13 @@ class Character(object):
             self.health_bar_numb = health_bar_numb
             return health_bar_numb
     
-    def remove_dead_char(self, character_x, character_y, screen, background_image):
-        x = character_x + 16
-        y = character_y + 16
+    def remove_dead_char(self, enemy, screen, background_image):
+        x = enemy.x + 16
+        y = enemy.y + 16
         
-        screen.blit(background_image, (x, y), pygame.Rect(x, y, character_x - 16, character_y - 16))
+        screen.blit(background_image, (x, y), pygame.Rect(x, y, enemy.x - 16, enemy.y - 16))
+        #enemy.speed_x = 0
+        #enemy.speed_y = 0
+        enemy.fight_status = False
+        enemy.x_when_clicked = -300
+        enemy.y_when_clicked = -300

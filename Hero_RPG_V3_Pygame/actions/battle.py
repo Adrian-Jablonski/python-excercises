@@ -76,24 +76,18 @@ class Battle(object):
                 Death().dead(hero)
 
     def attack_mode(self, hero, enemy, mouse_click_position):
-        distance = math.sqrt((math.pow((enemy.x_when_clicked + (enemy.width / 2)) - mouse_click_position[0], 2)) + (math.pow((enemy.y_when_clicked + (enemy.height / 2)) - mouse_click_position[1], 2)))
-        if distance < 32:
+        distance = math.sqrt((math.pow((enemy.x_when_clicked) - mouse_click_position[0], 2)) + (math.pow((enemy.y_when_clicked) - mouse_click_position[1], 2)))
+        if distance < enemy.height:
             enemy.fight_status = True
             #print("Attack mode is on")
             return True
         else:
             return False
 
-    def fight_mode(self, mouse_click_position, enemy):
-        distance = math.sqrt((math.pow((enemy.x_when_clicked + (enemy.width / 2)) - mouse_click_position[0], 2)) + (math.pow((enemy.y_when_clicked + (enemy.height / 2)) - mouse_click_position[1], 2)))
-        if distance < 32:
-            return True
-        else:
-            return False
 
     def distance_from_enemy(self, hero, enemy):
-        distance = math.sqrt((math.pow((enemy.x + (enemy.width)) - hero.x, 2)) + (math.pow((enemy.y + (enemy.height / 2)) - hero.y, 2)))
-        if distance < 60:
+        distance = math.sqrt((math.pow(enemy.x - hero.x, 2)) + (math.pow(enemy.y - hero.y, 2)))
+        if distance < 70:
             #enemy.fight_status = True
             #enemy.speed_x = 0
             #enemy.speed_y = 0
