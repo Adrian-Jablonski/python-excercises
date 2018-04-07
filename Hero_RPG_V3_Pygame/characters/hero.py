@@ -1,18 +1,26 @@
 from characters.base_characters import Character
 import random
 import math
+import pygame
 
 class Hero(Character):
     def __init__(self):
         self.name = "Hero"
-        self.health = 15
-        self.max_health = 15
-        self.power = 10
-        self.defense = 8
+        self.player_user_name = ""
+        self.health = 18
+        self.max_health = 18
+        self.power_lv = 19
+        self.defense_lv = 17
+        self.health_exp = round((25 + (self.health)) * (self.health) / 1.13767) * (self.health - 1)
+        self.next_health_level_exp = round(((25 + (self.health + 1)) * (self.health + 1) / 1.13767) * self.health)
+        self.power_exp = round((25 + (self.power_lv)) * (self.power_lv) / 1.13767) * (self.power_lv - 1)
+        self.next_power_level_exp = round(((25 + (self.power_lv + 1)) * (self.power_lv + 1) / 1.13767) * self.power_lv)
+        self.defense_exp = round((25 + (self.defense_lv)) * (self.defense_lv) / 1.13767) * (self.defense_lv - 1)
+        self.next_defense_level_exp = round(((25 + (self.defense_lv + 1)) * (self.defense_lv + 1) / 1.13767) * self.defense_lv)
         self.special_desc = "Generates 2x damage / 20%"
         self.coins = 100
         self.items = {
-            "Healing_Potion": 4, 
+            "Healing_Potion": 2, 
             "Helmet": 0, 
             "Sword": 0, 
             "Shield": 0, 
@@ -26,19 +34,22 @@ class Hero(Character):
             "Defense_Level": 0,
             "Health_Level" : 0,
         }
-        self.x = 70
-        self.y = 480 / 2
-        self.speed_x = 1
-        self.speed_y = 1
-        self.damage = 0
+        self.x_y = [250, 250]
+        self.speed_x_y = [2, 2]
+        self.width = 41
+        self.height = 55
+        self.damage = ""
         self.fight_status = False
         self.health_bar_numb = 20
-
-    def hero_status(self, hero):
-        print("", "-" * 42)
-        print(" \033[1;34;40m{} - \033[1;33;40mCoins: {} \U0001F4B0 \033[0;37;40m ".format(hero.name, hero.coins), " " * 20)
-        print("  \033[1;32;40mPower: {}\u2694\uFE0F  \033[1;36;40mDefense: {}\U0001F6E1  \033[1;31;40mHealth: {}/{} \u2764\uFE0F  \033[0;37;40m".format(hero.power, hero.defense, hero.health, hero.max_health))
-        print("", "-" * 42)
+        self.char_image = pygame.image.load("images/characters/hero.png").convert_alpha()
+        self.attack_range = 70
+        self.attack_time = 50
+        self.attack_stance = "Aggressive"
+        self.power_stance_bonus = 3
+        self.defense_stance_bonus = -3
+        self.power = max(self.power_lv + self.power_stance_bonus, 1)
+        self.defense = max(self.defense_lv + self.defense_stance_bonus, 1)
+        
 
     def bounty_earned(self, hero, enemy):
         randNumb = random.randint(0, len(enemy.bounty) - 1)    
@@ -55,7 +66,7 @@ class Hero(Character):
         self.items["Healing_Potion"] -= 1
         print("\033[0;32;40m{} drank a Healing Potion and restored \033[1;32;40m{}\033[0;32;40m health.\033[0;37;40m".format(self.name, restore_amount))
 
-    def equip_items(self, hero, item):
+    def equip_items(self, item):
         if item == "Helmet":
             self.defense += 3
         elif item == "Sword":
@@ -78,16 +89,56 @@ class Hero(Character):
             self.health += 1
             self.max_health += 1
 
-    def movement(self, hero, mouse_position):
+    def movement(self, hero, mouse_position, enemy, frozen):
 
-        distance = math.sqrt((math.pow(hero.x - mouse_position[0], 2)) + (math.pow(hero.y - mouse_position[1], 2)))
-        if distance < 32:
-            hero.speed_x = 0
-            hero.speed_y = 0
+        distance = math.sqrt((math.pow(hero.x_y[0] - mouse_position[0], 2)) + (math.pow(hero.x_y[1] - mouse_position[1], 2)))
+        
+        if distance < 29:
+            #hero.speed_x_y = [0, 0]
             return True
         else:
-            hero.speed_x = 1
-            hero.speed_y = 1
+            # hero.speed_x_y = [1, 1]
             return False
 
-        
+    def hero_death(self, enemy):
+        self.x_y = [90, 150]
+        self.fight_status = False
+        self.health = self.max_health
+        self.coins -= int(round(self.coins * .80))
+        self.items["Healing_Potion"] = 0 
+        self.items["Helmet"] = 0
+        self.items["Sword"] = 0 
+        self.items["Shield"] = 0 
+        self.items["Chainmail"] = 0 
+        self.items["Zombie_Axe"] = 0 
+        self.items["Dragon_Fire_Shield"] = 0
+        self.health_bar_numb = 20
+        self.damage = ""
+        enemy.fight_status = False
+        enemy.speed_x_y = [1, 1]
+        enemy.damage = ""
+
+    def hero_attack_stance(self, mouse_click_position):
+        if mouse_click_position[0] >= 540 and mouse_click_position[0] <= 570 and mouse_click_position[1] >= 520 and mouse_click_position[1] <= 550:
+            self.attack_stance = "Aggressive"
+            self.power = self.power_lv + 3
+            self.defense = max(self.defense_lv - 3, 1)
+        elif mouse_click_position[0] >= 680 and mouse_click_position[0] <= 710 and mouse_click_position[1] >= 520 and mouse_click_position[1] <= 550:
+            self.attack_stance = "Defensive"
+            self.power = max(self.power_lv - 3, 1)
+            self.defense = self.defense_lv + 3
+        elif mouse_click_position[0] >= 540 and mouse_click_position[0] <= 570 and mouse_click_position[1] >= 562 and mouse_click_position[1] <= 595:
+            self.attack_stance = "Normal"
+            self.power = self.power_lv
+            self.defense = self.defense_lv
+
+    def load_hero_attack_stance(self):  # needed since attack stance bonus was not being counted without clicking on the attack stance
+        if self.attack_stance == "Aggressive":
+            self.power = self.power_lv + 3
+            self.defense = max(self.defense_lv - 3, 1)
+        elif self.attack_stance == "Defensive":
+            self.power = max(self.power_lv - 3, 1)
+            self.defense = self.defense_lv + 3
+        elif self.attack_stance == "Normal":
+            self.power = self.power_lv
+            self.defense = self.defense_lv

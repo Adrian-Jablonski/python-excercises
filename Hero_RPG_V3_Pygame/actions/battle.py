@@ -76,21 +76,30 @@ class Battle(object):
                 Death().dead(hero)
 
     def attack_mode(self, hero, enemy, mouse_click_position):
-        distance = math.sqrt((math.pow((enemy.x_when_clicked) - mouse_click_position[0], 2)) + (math.pow((enemy.y_when_clicked) - mouse_click_position[1], 2)))
-        if distance < enemy.height:
+        # distance = math.sqrt((math.pow((enemy.x_y_when_clicked[0]) - mouse_click_position[0], 2)) + (math.pow((enemy.x_y_when_clicked[1]) - mouse_click_position[1], 2)))
+        # if distance < enemy.height:
+        enemy_box_x_range = [enemy.x_y_when_clicked[0], enemy.x_y_when_clicked[0] + enemy.width]
+        enemy_box_y_range = [enemy.x_y_when_clicked[1], enemy.x_y_when_clicked[1] + enemy.height]
+        if mouse_click_position[0] >= enemy_box_x_range[0] and mouse_click_position[0] <= enemy_box_x_range[1] and mouse_click_position[1] >= enemy_box_y_range[0] and mouse_click_position[1] <= enemy_box_y_range[1]:
             enemy.fight_status = True
-            #print("Attack mode is on")
             return True
         else:
             return False
 
 
     def distance_from_enemy(self, hero, enemy):
-        distance = math.sqrt((math.pow(enemy.x - hero.x, 2)) + (math.pow(enemy.y - hero.y, 2)))
-        if distance < 70:
-            #enemy.fight_status = True
-            #enemy.speed_x = 0
-            #enemy.speed_y = 0
+        # distance = math.sqrt((math.pow(enemy.x_y[0] - hero.x_y[0], 2)) + (math.pow(enemy.x_y[1] - hero.x_y[1], 2)))
+        # if distance < 70:
+        enemy_box_x_range = [enemy.x_y[0], enemy.x_y[0] + enemy.width]
+        enemy_box_y_range = [enemy.x_y[1], enemy.x_y[1] + enemy.height]
+        if hero.x_y[0] + (enemy.width) >= enemy_box_x_range[0] and hero.x_y[0] - (enemy.width) <= enemy_box_x_range[1] and hero.x_y[1] + (enemy.height) >= enemy_box_y_range[0] and hero.x_y[1] - (enemy.height) <= enemy_box_y_range[1]:
+            enemy.fight_status = True
+            return True
+        else:
+            return False
+
+    def attack_range(self, char1, char2):
+        if abs(char1.x_y[0] - char2.x_y[0]) <= char1.attack_range and abs(char1.x_y[1] - char2.x_y[1]) <= char1.attack_range:
             return True
         else:
             return False
