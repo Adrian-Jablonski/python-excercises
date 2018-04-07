@@ -1,0 +1,22 @@
+Most images were taken from https://opengameart.org/
+
+Thank you to the following and to any I may have missed;
+
+- Terrain Files - 
+    - https://opengameart.org/content/lpc-terrain-repack
+    - https://opengameart.org/content/rpg-tiles-cobble-stone-paths-town-objects
+    - Plus see Terrain_Attribution.txt File
+
+- Characters
+    - https://opengameart.org/content/grue
+    - https://opengameart.org/content/archer-static-64x64
+    - https://opengameart.org/content/dragon-idle-animation
+    - https://opengameart.org/content/first-person-dungeon-crawl-art-pack
+    - https://opengameart.org/content/fantasy-heroes-character-sprite-sheet
+    - https://opengameart.org/content/2d-game-mage-character-sprite
+    - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+
+- User interface 
+    - https://opengameart.org/content/moderna-graphical-interface
+    - https://opengameart.org/content/yellow-blue-button-set
+    - https://opengameart.org/content/royal-ui-set
