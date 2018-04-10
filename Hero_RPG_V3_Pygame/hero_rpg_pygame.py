@@ -32,7 +32,7 @@ def main():
     height = 670
     pygame.init()
     screen = pygame.display.set_mode((width, height))
-    pygame.display.set_caption('My Game')
+    pygame.display.set_caption('Kingdom of Objalinsk')
     clock = pygame.time.Clock()
 
     # ************* IMAGES *******************
