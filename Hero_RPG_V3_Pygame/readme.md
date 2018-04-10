@@ -81,7 +81,7 @@ The only inventory item for now is a healing potion which can heal 10 Health. It
 
 ### c. Equipment
 
-This is not set up yet but the equipment will give additional bonus's to Power and Defense.
+This is not set up yet but the equipment will give additional bonuses to Power and Defense.
 
 ### 9. Hero Death:
 
