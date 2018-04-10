@@ -2,6 +2,8 @@
 
 This game is a pygame version of my Hero RPG V2 text RPG game. https://github.com/Adrian-Jablonski/python-exercises/tree/master/Hero_RPG_V2
 
+*This game is still a work in process but most functions work. The map is still being expanded and not all characters are currently in the game.*
+
 ## GamePlay:
 
 ### 1. Main Menu:
@@ -84,3 +86,7 @@ This is not set up yet but the equipment will give additional bonus's to Power a
 ### 9. Hero Death:
 
 Upon hero death, you will lose most of your coins and all your inventory and equipment.
+
+### 10. Saving the Game:
+
+The game is auto saved when the user exits the game.
