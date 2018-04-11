@@ -7,10 +7,10 @@ class Hero(Character):
     def __init__(self):
         self.name = "Hero"
         self.player_user_name = ""
-        self.health = 18
-        self.max_health = 18
-        self.power_lv = 19
-        self.defense_lv = 17
+        self.health = 12
+        self.max_health = 12
+        self.power_lv = 1
+        self.defense_lv = 1
         self.health_exp = round((25 + (self.health)) * (self.health) / 1.13767) * (self.health - 1)
         self.next_health_level_exp = round(((25 + (self.health + 1)) * (self.health + 1) / 1.13767) * self.health)
         self.power_exp = round((25 + (self.power_lv)) * (self.power_lv) / 1.13767) * (self.power_lv - 1)
@@ -35,7 +35,7 @@ class Hero(Character):
             "Health_Level" : 0,
         }
         self.x_y = [250, 250]
-        self.speed_x_y = [2, 2]
+        self.speed_x_y = [2.2, 2.2]
         self.width = 41
         self.height = 55
         self.damage = ""
